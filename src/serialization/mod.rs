@@ -7,7 +7,9 @@
 mod parsable;
 mod parse_node;
 mod serialization_writer;
+mod untyped_node;
 
 pub use parsable::{Parsable, ParsableFactory};
 pub use parse_node::{ParseNode, ParseNodeFactory};
 pub use serialization_writer::{SerializationWriter, SerializationWriterFactory};
+pub use untyped_node::UntypedNode;
