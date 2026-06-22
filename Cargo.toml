@@ -1,0 +1,23 @@
+[package]
+name = "kiota-abstractions"
+version = "0.1.0"
+edition = "2021"
+authors = ["Ashutosh <ashutosh@example.com>"]
+description = "Core abstractions for Kiota-generated Rust SDKs"
+license = "MIT"
+repository = "https://github.com/Ashutosh0x/kiota-abstractions-rust"
+keywords = ["kiota", "openapi", "sdk", "api-client", "code-generation"]
+categories = ["api-bindings", "web-programming"]
+
+[dependencies]
+async-trait = "0.1"
+thiserror = "2"
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+url = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+http = "1"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["full"] }
