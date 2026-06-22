@@ -1,7 +1,6 @@
 //! Error types for Kiota SDK operations.
 
 use std::collections::HashMap;
-use std::fmt;
 
 /// The primary error type for all Kiota SDK operations.
 #[derive(Debug, thiserror::Error)]

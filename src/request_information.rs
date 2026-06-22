@@ -3,13 +3,12 @@
 use std::collections::HashMap;
 
 use crate::http_method::HttpMethod;
-use crate::serialization::SerializationWriter;
 use crate::error::KiotaError;
 
 /// Represents all the information needed to make an HTTP request.
 /// Generated request builders populate this struct and pass it to
 /// a [`RequestAdapter`](crate::RequestAdapter) for execution.
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct RequestInformation {
     /// The HTTP method for the request.
     pub http_method: HttpMethod,
@@ -25,8 +24,20 @@ pub struct RequestInformation {
     pub content: Option<Vec<u8>>,
     /// The content type of the request body.
     pub content_type: Option<String>,
-    /// Request options for middleware handlers.
-    pub request_options: HashMap<String, Box<dyn std::any::Any + Send + Sync>>,
+}
+
+impl Clone for RequestInformation {
+    fn clone(&self) -> Self {
+        Self {
+            http_method: self.http_method.clone(),
+            url_template: self.url_template.clone(),
+            path_parameters: self.path_parameters.clone(),
+            query_parameters: self.query_parameters.clone(),
+            headers: self.headers.clone(),
+            content: self.content.clone(),
+            content_type: self.content_type.clone(),
+        }
+    }
 }
 
 /// A collection of HTTP headers that supports multiple values per key.
@@ -103,7 +114,6 @@ impl RequestInformation {
             headers: RequestHeaders::new(),
             content: None,
             content_type: None,
-            request_options: HashMap::new(),
         }
     }
 

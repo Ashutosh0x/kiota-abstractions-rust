@@ -1,6 +1,5 @@
 //! Extension methods for request information and other types.
 
-use crate::error::KiotaError;
 use crate::request_information::RequestInformation;
 
 /// Extension trait for `RequestInformation` with convenience methods.

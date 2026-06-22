@@ -10,7 +10,6 @@ pub trait RequestOption: Send + Sync + std::any::Any {
 }
 
 /// Configuration for a request, combining query parameters and options.
-#[derive(Debug, Default)]
 pub struct RequestConfiguration<Q: QueryParameters> {
     /// The query parameters for the request.
     pub query_parameters: Option<Q>,
@@ -18,6 +17,26 @@ pub struct RequestConfiguration<Q: QueryParameters> {
     pub headers: Option<std::collections::HashMap<String, String>>,
     /// Request options for middleware.
     pub options: Vec<Box<dyn RequestOption>>,
+}
+
+impl<Q: QueryParameters + std::fmt::Debug> std::fmt::Debug for RequestConfiguration<Q> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("RequestConfiguration")
+            .field("query_parameters", &self.query_parameters)
+            .field("headers", &self.headers)
+            .field("options_count", &self.options.len())
+            .finish()
+    }
+}
+
+impl<Q: QueryParameters + Default> Default for RequestConfiguration<Q> {
+    fn default() -> Self {
+        Self {
+            query_parameters: None,
+            headers: None,
+            options: Vec::new(),
+        }
+    }
 }
 
 /// A trait for types that can serialize themselves as query parameters.

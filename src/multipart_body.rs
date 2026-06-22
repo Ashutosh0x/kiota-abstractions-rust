@@ -3,7 +3,6 @@
 use std::collections::HashMap;
 
 use crate::error::KiotaError;
-use crate::serialization::SerializationWriter;
 
 /// Represents a multipart request body for file uploads and mixed-content requests.
 pub struct MultipartBody {

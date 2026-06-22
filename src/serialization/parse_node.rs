@@ -46,7 +46,9 @@ pub trait ParseNode: Send + Sync {
     /// Gets a collection of child nodes (for arrays).
     fn get_collection_of_primitive_values<T: std::str::FromStr>(
         &self,
-    ) -> Result<Vec<T>, KiotaError>;
+    ) -> Result<Vec<T>, KiotaError>
+    where
+        Self: Sized;
 
     /// Gets a collection of object values.
     fn get_collection_of_object_values(
@@ -61,10 +63,14 @@ pub trait ParseNode: Send + Sync {
     ) -> Result<Option<Box<dyn Parsable>>, KiotaError>;
 
     /// Gets an enum value from the node.
-    fn get_enum_value<T: std::str::FromStr>(&self) -> Result<Option<T>, KiotaError>;
+    fn get_enum_value<T: std::str::FromStr>(&self) -> Result<Option<T>, KiotaError>
+    where
+        Self: Sized;
 
     /// Gets a collection of enum values.
-    fn get_collection_of_enum_values<T: std::str::FromStr>(&self) -> Result<Vec<T>, KiotaError>;
+    fn get_collection_of_enum_values<T: std::str::FromStr>(&self) -> Result<Vec<T>, KiotaError>
+    where
+        Self: Sized;
 }
 
 /// Factory for creating `ParseNode` instances from content types and byte payloads.

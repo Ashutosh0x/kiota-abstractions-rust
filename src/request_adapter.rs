@@ -6,7 +6,7 @@ use async_trait::async_trait;
 
 use crate::error::KiotaError;
 use crate::request_information::RequestInformation;
-use crate::serialization::{Parsable, ParsableFactory, ParseNodeFactory, SerializationWriterFactory};
+use crate::serialization::{Parsable, ParsableFactory, SerializationWriterFactory};
 
 /// The service responsible for translating abstract `RequestInformation`
 /// into native HTTP requests and processing the responses.
@@ -21,21 +21,27 @@ pub trait RequestAdapter: Send + Sync {
         &self,
         request_info: &RequestInformation,
         error_mappings: &HashMap<String, ParsableFactory>,
-    ) -> Result<Option<T>, KiotaError>;
+    ) -> Result<Option<T>, KiotaError>
+    where
+        Self: Sized;
 
     /// Sends a request that returns a collection of deserialized objects.
     async fn send_collection<T: Parsable + Default>(
         &self,
         request_info: &RequestInformation,
         error_mappings: &HashMap<String, ParsableFactory>,
-    ) -> Result<Vec<T>, KiotaError>;
+    ) -> Result<Vec<T>, KiotaError>
+    where
+        Self: Sized;
 
     /// Sends a request that returns a primitive value.
     async fn send_primitive<T: std::str::FromStr + Send>(
         &self,
         request_info: &RequestInformation,
         error_mappings: &HashMap<String, ParsableFactory>,
-    ) -> Result<Option<T>, KiotaError>;
+    ) -> Result<Option<T>, KiotaError>
+    where
+        Self: Sized;
 
     /// Sends a request that returns no content (e.g., DELETE, 204 responses).
     async fn send_no_content(

@@ -3,7 +3,6 @@
 use async_trait::async_trait;
 
 use crate::error::KiotaError;
-use crate::request_option::RequestOption;
 use crate::response_handler::ResponseHandler;
 
 /// A response handler that captures the native/raw HTTP response
@@ -43,7 +42,7 @@ impl Default for NativeResponseHandler {
 impl ResponseHandler for NativeResponseHandler {
     async fn handle_response(
         &self,
-        response: &dyn std::any::Any,
+        _response: &dyn std::any::Any,
         _error_mappings: &std::collections::HashMap<
             String,
             crate::serialization::ParsableFactory,
